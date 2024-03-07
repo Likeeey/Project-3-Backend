@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const Exercise = require('../models/Exercise.model');
 
 router.post("/exercise", (req, res) => {
-    const { name, sets, reps } = req.body;
+    const { name, type, muscle, sets, reps, instructions } = req.body;
 
-    Exercise.create({name, sets, reps})
+    Exercise.create({name, type, muscle, sets, reps, instructions})
     .then((response) => res.json(response))
     .catch((error) => res.json(error));
 });
@@ -27,9 +27,9 @@ router.get("/exercises/:exerciseId", (req, res) => {
 
 router.put("/exercises/:exerciseId", (req, res) => {
     const { exerciseId } = req.params;
-    const { name, sets, reps } = req.body;
+    const { name, type, muscle, sets, reps, instructions } = req.body;
 
-    Exercise.findByIdAndUpdate(exerciseId, {name, sets, reps}, {new: true})
+    Exercise.findByIdAndUpdate(exerciseId, {name, type, muscle, sets, reps, instructions}, {new: true})
     .then(() => {
         res.json({message: "Exercise Updated!"});
     })
