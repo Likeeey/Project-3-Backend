@@ -18,6 +18,12 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
+const cardioRoutes = require("./routes/cardio.routes");
+app.use("/api", cardioRoutes);
+
+const exerciseRoutes = require("./routes/exercise.routes");
+app.use("/api", exerciseRoutes);
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
