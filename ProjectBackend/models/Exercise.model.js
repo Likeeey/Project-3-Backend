@@ -7,7 +7,8 @@ const exerciseSchema = new Schema ({
     muscle: {type: String, Enumerator: ["abdominals", "abductors", "adductors", "biceps", "calves", "chest", "forearms", "glutes", "hamstrings", "lats", "lower_back", "middle_back", "neck", "quadriceps", "traps", "triceps"]},
     sets: {type: Number},
     reps: {type: Number},
-    instructions: {type: String}
+    instructions: {type: String},
+    user: { type: Schema.Types.ObjectId, ref: "User"}
 });
 
 const Exercise = model("Exercise", exerciseSchema);

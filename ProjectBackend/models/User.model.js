@@ -18,6 +18,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Username is required."],
     },
+    tracking: [{ type: Schema.Types.ObjectId, ref: "Tracking"}],
+    exercise: [{ type: Schema.Types.ObjectId, ref: "Exercise"}],
+
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

@@ -27,6 +27,12 @@ app.use("/api", coachRoutes);
 const memberRoutes = require("./routes/member_results.routes");
 app.use("/api", memberRoutes);
 
+const trackingRoutes = require("./routes/tracking.routes");
+app.use("/api", trackingRoutes);
+
+const userRoutes = require("./routes/user.routes");
+app.use("/api", userRoutes);
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 

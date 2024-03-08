@@ -69,7 +69,7 @@ router.post("/signup", (req, res, next) => {
       const user = { email, username, _id };
 
       // Send a json response containing the user object
-      res.status(201).json({ user: username });
+      res.status(201).json({ user: username, _id});
     })
     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 });
