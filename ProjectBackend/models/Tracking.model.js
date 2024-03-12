@@ -6,7 +6,7 @@ const trackingSchema = new Schema ({
     steps: {type: Number},
     duration: {type: String},
     kcals: {type: String},
-    user: { type: Schema.Types.ObjectId, ref: "User"}
+    createdBy: {type: Schema.Types.ObjectId, ref: "User"}
 });
 
 const Tracking = model("Tracking", trackingSchema);

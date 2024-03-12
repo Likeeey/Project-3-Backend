@@ -6,7 +6,7 @@ const { isAuthenticated } = require('../middleware/jwt.middleware');
 router.post('/profile', (req, res) => {
     const { email, username } = req.body;
 
-    User.create({ email, username, exercise: [], tracking: [] })
+    User.create({ email, username })
     .then((response) => res.json(response))
     .catch((error) => res.json(error))
 });
@@ -23,7 +23,7 @@ router.get('/profile/:id', (req, res, next) => {
     const { id } = req.params;
 
     User.findById(id)
-    .populate("exercise", "tracking")
+    .populate("tracking").populate("training")
     .then((profile) => res.json(profile))
     .catch((error) => res.json(error));
 })

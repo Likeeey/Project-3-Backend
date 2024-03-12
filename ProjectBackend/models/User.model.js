@@ -19,7 +19,6 @@ const userSchema = new Schema(
       required: [true, "Username is required."],
     },
     tracking: [{ type: Schema.Types.ObjectId, ref: "Tracking"}],
-    exercise: [{ type: Schema.Types.ObjectId, ref: "Exercise"}],
 
   },
   {

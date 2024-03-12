@@ -3,38 +3,52 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Tracking = require('../models/Tracking.model');
+const { isAuthenticated } = require('../middleware/jwt.middleware');
 
-router.post("/tracking", (req, res) => {
+router.post("/tracking", isAuthenticated, (req, res) => {
     const { bodyWeight, steps, duration, kcals } = req.body;
+    const { _id } = req.payload;
 
-    Tracking.create({ bodyWeight, steps, duration, kcals })
+    Tracking.create({ bodyWeight, steps, duration, kcals, createdBy:_id })
     .then((response) => res.json(response))
     .catch((error) => res.json(error));
 });
 
-router.get("/trackings", (req, res) => {
-    Tracking.find()
+router.get("/trackings", isAuthenticated, (req, res) => {
+
+    const { _id } = req.payload;
+    Tracking.find({createdBy:_id})
     .then((response) => res.json(response))
     .catch((error) => res.json(error));
 });
 
 router.get("/trackings/:trackingId", (req, res) => {
     const { trackingId } = req.params;
-    Tracking.findById(trackingId)
+    Tracking.findById(trackingId).populate("createdBy")
     .then((tracking) => res.json(tracking))
     .catch((error) => res.json(error));
 });
 
-router.put("/trackings/:trackingId", (req, res) => {
+router.put("/trackings/:trackingId", isAuthenticated, (req, res) => {
+    const { _id } = req.payload;
+    
     const { trackingId } = req.params;
-    const { bodyWeight, steps, duration, kcals } = req.body;
-    Tracking.findByIdAndUpdate(trackingId, {bodyWeight, steps, duration, kcals })
-    .then(() => {
-        res.json({message: "Tracker Updated"});
+    Tracking.findById(trackingId).then((response) => {
+        if (response.data.createdBy === _id) {
+            const { bodyWeight, steps, duration, kcals } = req.body;
+                Tracking.findByIdAndUpdate(trackingId, {bodyWeight, steps, duration, kcals })
+                .then(() => {
+                res.json({message: "Tracker Updated"});
+            })
+                .catch(() => {
+                res.json({message: "Tracker was not updated!"})
+            });
+        }
+        else {
+            res.status(401).json({message: "You are not the owner of the tracker!"})
+        }
     })
-    .catch(() => {
-        res.json({message: "Tracker was not updated!"})
-    });
+    
 });
 
 router.delete("/trackings/:trackingId", (req, res) => {

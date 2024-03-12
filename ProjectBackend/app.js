@@ -30,6 +30,9 @@ app.use("/api", memberRoutes);
 const trackingRoutes = require("./routes/tracking.routes");
 app.use("/api", trackingRoutes);
 
+const trainingRoute = require("./routes/trainings.routes");
+app.use("/api", trainingRoute);
+
 const userRoutes = require("./routes/user.routes");
 app.use("/api", userRoutes);
 
