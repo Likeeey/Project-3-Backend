@@ -29,11 +29,10 @@ router.get("/trainings/:trainingId", (req, res) => {
 });
 
 router.put("/trainings/:trainingId", isAuthenticated, (req, res) => {
-    const { _id } = req.payload;
+    
     const { trainingId } = req.params;
-    Training.findById(trainingId).then((training) => {
-        if (training.createdBy.toString() === _id) {
-            const { name, type, muscle, sets, reps, instructions } = req.body;
+    const { name, type, muscle, sets, reps, instructions } = req.body;
+
             Training.findByIdAndUpdate(trainingId, { name, type, muscle, sets, reps, instructions })
                 .then(() => {
                     res.json({ message: "Training Updated" });
@@ -41,11 +40,7 @@ router.put("/trainings/:trainingId", isAuthenticated, (req, res) => {
                 .catch(() => {
                     res.json({ message: "Training was not updated!" });
                 });
-        } else {
-            res.status(401).json({ message: "You are not the owner of the training!" });
-        }
-    });
-});
+        });
 
     
 router.delete("/trainings/:trainingId", (req, res) => {

@@ -30,12 +30,11 @@ router.get("/trackings/:trackingId", (req, res) => {
 });
 
 router.put("/trackings/:trackingId", isAuthenticated, (req, res) => {
-    const { _id } = req.payload;
     
+    const { bodyWeight, steps, duration, kcals } = req.body;
     const { trackingId } = req.params;
-    Tracking.findById(trackingId).then((response) => {
-        if (response.createdBy.toString() === _id) {
-            const { bodyWeight, steps, duration, kcals } = req.body;
+    
+            
                 Tracking.findByIdAndUpdate(trackingId, {bodyWeight, steps, duration, kcals })
                 .then(() => {
                 res.json({message: "Tracker Updated"});
@@ -43,12 +42,8 @@ router.put("/trackings/:trackingId", isAuthenticated, (req, res) => {
                 .catch(() => {
                 res.json({message: "Tracker was not updated!"})
             });
-        }
-        else {
-            res.status(401).json({message: "You are not the owner of the tracker!"})
-        }
-    })
-    })
+        });
+    
 
 router.delete("/trackings/:trackingId", (req, res) => {
     const { trackingId } = req.params;
