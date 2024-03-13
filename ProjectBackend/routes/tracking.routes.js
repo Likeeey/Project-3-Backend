@@ -51,16 +51,24 @@ router.put("/trackings/:trackingId", isAuthenticated, (req, res) => {
     
 });
 
-router.delete("/trackings/:trackingId", (req, res) => {
-    const { trackingId } = req.params;
+router.delete("/trackings/:trackingId", isAuthenticated, (req, res) => {
+    const { _id } = req.payload;
 
-    Tracking.findByIdAndDelete(trackingId)
-    .then(() => {
-        res.json({message: "Tracker was deleted!"})
-    })
-    .catch(() => {
-        res.json({message: "Tracker was not deleted!"})
-    });
+    const { trackingId } = req.params;
+    Tracking.findById(trackingId).then((response) => {
+        if (response.data.createdBy === _id) {
+            Tracking.findByIdAndDelete(trackingId)
+            .then(() => {
+            res.json({message: "Tracker was deleted!"})
+        })
+            .catch(() => {
+            res.json({message: "Tracker was not deleted!"})
+        });
+    }
+    else {
+        res.status(401).json({message: "You are not the owner of the tracker to delete it!"})
+    }
+})
 });
 
 module.exports = router;

@@ -13,7 +13,7 @@ router.post('/profile', (req, res) => {
 
 router.get('/profile', (req, res) => {
     User.find()
-    .populate("exercise", "tracking")
+    .populate("training", "tracking")
     .then((allprofile) => res.json(allprofile))
     .catch((error) => res.json(error))
 })

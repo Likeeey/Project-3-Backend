@@ -8,7 +8,7 @@ const trainingSchema = new Schema ({
     sets: {type: Number},
     reps: {type: Number},
     instructions: {type: String},
-    user: { type: Schema.Types.ObjectId, ref: "User"}
+    createdBy: { type: Schema.Types.ObjectId, ref: "User"}
 });
 
 const Training = model("Training", trainingSchema);
