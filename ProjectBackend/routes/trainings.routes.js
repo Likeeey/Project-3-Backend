@@ -43,7 +43,7 @@ router.put("/trainings/:trainingId", isAuthenticated, (req, res) => {
         });
 
     
-router.delete("/trainings/:trainingId", (req, res) => {
+router.delete("/trainings/:trainingId", isAuthenticated, (req, res) => {
     const { trainingId } = req.params;
 
     Training.findByIdAndDelete(trainingId)

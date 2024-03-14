@@ -45,7 +45,7 @@ router.put("/trackings/:trackingId", isAuthenticated, (req, res) => {
         });
     
 
-router.delete("/trackings/:trackingId", (req, res) => {
+router.delete("/trackings/:trackingId", isAuthenticated, (req, res) => {
     const { trackingId } = req.params;
 
     Tracking.findByIdAndDelete(trackingId)
