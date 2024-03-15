@@ -8,7 +8,7 @@ const coachesSchema = new Schema ({
     nationality: {type: String, required: true },
     languages: {type: String},
     description: {type: String, required: true},
-    img1: {type: String, Enum:["https://w7.pngwing.com/pngs/841/222/png-transparent-avatar-boy-max-avatar-vol-2-icon.png"]}
+    img_1: {type: String}
 });
 
 const Coach = model("Coach", coachesSchema);
